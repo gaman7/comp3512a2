@@ -1,14 +1,12 @@
 // search browse songs 
+
+//artist dropdown
 document.write("<h2>Selecting Artists</h2>");
-
 const artists = JSON.parse(content);
-
 function outputArtist(artist) {
-    
     document.write(`<option value="${artist.id}">${artist.name}">${artist.type}</option>`);
   }
   
-
   document.write(`<select id="artistSelect">`);
   for (let artist of artists) {
     outputArtist(artist);
@@ -16,76 +14,107 @@ function outputArtist(artist) {
   document.write(`</select>`);
 
 
+  //genre dropdown
   document.write("<h2>Selecting Genres</h2>");
-
-  document.write(`<p Selecting Genres >`);
-
 const genres=JSON.parse(tempGenres);
 function outputArtist(genre) {
-    
     document.write(`<option value="${genre.id}">${genre.name}</option>`);
   }
   
 
   document.write(`<select id="genreSelect">`);
-
   for (let genre of genres) {
     outputArtist(genre);
   }
-  
-  const song = JSON.parse(songs);
+  document.write(`</select>`);
+
+//songs
+document.write("<h2>Browse/Search result</h2>");
+const songList = JSON.parse(songsFile);
+
+  function outputSongs(song){
+    document.write(`<option value="${song.song_id}">${song.title}</option>`);
+  }
+
+  document.write(`<select id="songSelect">`);
+  for (let song of songList) {
+    outputSongs(song);
+  }
+  document.write(`</select>`);
   
   function displaySongDetails(songView) {
     document.write(`
     <div style="width: 45%; display: inline-block; margin: 10px; padding: 10px; border: 1px solid #ccc;">
             <p>Title: ${songView.title}</p>
-            <p>Artist: ${songView.artist}</p>
+            <p>Artist: ${songView.artist.name}</p>
             <p>Year: ${songView.year}</p>
-            <p>Genre: ${songView.genre}</p>
-            <p>Popularity: ${songView.details}</p>
+            <p>Genre: ${songView.genre.name}</p>
+            <p>Popularity: ${songView.details.popularity}</p>
         </div>
 `
         
     );
 }
 
-document.write(`<p>`);
-  for (let songviews of song) {
-    displaySongDetails(song);
+document.write(`<p id="songSelect">`);
+
+  for (let songviews of songList) {
+    displaySongDetails(songviews);
+    console.log(songviews);
   }
   document.write(`</p>`);
 
 
+ // const songList = JSON.parse(songsFile);
 
 
+     
+   
+   
+//  const genres=JSON.parse(tempGenres);
+// document.addEventListener("DOMContentLoaded", function(){
+// const main = document.querySelector('main');
 
+   
 
-//   document.querySelector('body') .addEventListener('click', function (e) {
-//     // verify user has clicked on image within <main>
-// if (e.target && e.target.nodeName.toLowerCase() == 'img') {
-// populateAside(e); }
-// } );
+// document.write(`<select id="genreSelect">`);
+// document.write("<h2>Selecting Genres</h2>");
 
-//   function populateAside(e) {
-//     // determine the clicked symbol name from clicked image
-// let clickedSymbolName = e.target.getAttribute('title');
-//     // search through stocks array looking for symbol that matches
-// const foundSymbol = stocks.find(function(element) {
-// return element.symbol === clickedSymbolName; });
-//     // display aside (hidden initially)
-// let aside = document.querySelector('aside'); aside.style.display = 'block';
-// let logo = document.querySelector('#logo img');
-//  let symbol = document.querySelector('#symbol'); 
-//  let name = document.querySelector('#name');
-// let sector = document.querySelector('#sector'); 
-// let sub = document.querySelector('#sub');
-//      // populate table with data
-// logo.setAttribute('src', `images/logos/${foundSymbol.symbol}.svg`);
-// symbol.textContent = foundSymbol.symbol; 
-// name.textContent = foundSymbol.name; 
-// sector.textContent = foundSymbol.sector; 
-// sub.textContent = foundSymbol.subIndustry;
+// for (let genre of genres) {
+//   //genre dropdown
+
+//   function outputArtist(genre) {
+//     let option = document.createElement('option');
+//     option.setAttribute('value')
+//     option = document.write(`<option value="${genre.id}">${genre.name}</option>`);
+//     option.setAttribute('title', songList.title);
+//     }
+//   outputArtist(genre);
 // }
+
+// document.write(`</select>`);
+// }
+// );
+
+// document.querySelector('main').addEventListener('click', function(s){
+//   if (s.target && s.target.nodeName.toLowerCase() == '#title'){
+//     populateAside(s);
+//   }
+
+// }
+// );
+
+// function populateAside(s){
+//   let clickedGenre = s.target.getAttribute('title');
+//   const foundGenre = songList.find(function(element){
+//     return element.genre.name === clickedGenre;
+//   });
+
+//   console.log(s);
+// }
+
+
+
 
 
 
