@@ -35,7 +35,6 @@ function outputArtist(genre) {
   document.write(`</select>`);
 
 //songs
-document.write("<h2>Browse/Search result</h2>");
 const songList = JSON.parse(songsFile);
 
 let sortColumn = null;
