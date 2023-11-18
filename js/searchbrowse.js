@@ -71,49 +71,119 @@ document.write(`<p id="songSelect">`);
   }
   document.write(`</p>`);
 
- 
+  ////////////
+
+//  // Get the container to append the table
+// const tableContainer = document.getElementById("table-container");
+
+// // Create a table element
+// const table = document.createElement("table");
+
+// // Create table header
+// const headerRow = table.insertRow(0);
+// const headers = ["Title", "Artist", "Year", "Popularity", "Genre"];
+
+// for (const headerText of headers) {
+//     const header = document.createElement("th");
+//     header.innerHTML = `<b>${headerText}</b>`;
+//     headerRow.appendChild(header);
+// }
+
+// // Iterate through each song and add a row to the table
+// for (const song of songList) {
+//     const row = table.insertRow();
+//     const cells = [song.title, song.artist.name, song.year, song.details.popularity, song.genre.name];
+
+//     for (const cellData of cells) {
+//         const cell = row.insertCell();
+//         cell.innerHTML = cellData;
+//     }
+//   }
+
+// // Append the table to the container
+// tableContainer.appendChild(table);
 
 
-  // Get the container to append the table
+let sortColumn = null;
+let sortDirection = 1; // 1 for ascending, -1 for descending
+
 const tableContainer = document.getElementById("table-container");
-
-// Create a table element
 const table = document.createElement("table");
 
-// Create table header
 const headerRow = table.insertRow(0);
-const titleHeader = headerRow.insertCell(0);
-titleHeader.innerHTML = "<b>Title</b>";
-const artistHeader = headerRow.insertCell(1);
-artistHeader.innerHTML = "<b>Artist</b>";
-const yearHeader = headerRow.insertCell(2);
-yearHeader.innerHTML = "<b>Year</b>";
-const popHeader = headerRow.insertCell(3);
-popHeader.innerHTML = "<b>Popularity</b>";
-const genreHeader = headerRow.insertCell(4);
-genreHeader.innerHTML = "<b>Genre</b>";
+const headers = ["Title", "Artist", "Year", "Popularity", "Genre"];
 
-
-// Iterate through each song and add a row to the table
-for (let i = 0; i < songList.length; i++) {
-    const song = songList[i];
-    const row = table.insertRow(i + 1);
-    const titleCell = row.insertCell(0);
-    titleCell.innerHTML = song.title;
-    const artistCell = row.insertCell(1);
-    artistCell.innerHTML = song.artist.name;
-    const yearCell = row.insertCell(2);
-    yearCell.innerHTML = song.year;
-    const popularity = row.insertCell(3);
-    popularity.innerHTML = song.details.popularity;
-    const genre = row.insertCell(4);
-    genre.innerHTML = song.genre.name;
-
+for (let i = 0; i < headers.length; i++) {
+    const header = document.createElement("th");
+    header.innerHTML = `<b>${headers[i]}</b>`;
+    header.addEventListener("click", () => sortTable(i));
+    headerRow.appendChild(header);
 }
 
-// Append the table to the container
-tableContainer.appendChild(table);
+function sortTable(columnIndex) {
+    if (columnIndex === sortColumn) {
+        // If clicking on the same column, reverse the sort direction
+        sortDirection *= -1;
+    } else {
+        // If clicking on a different column, reset the sort direction
+        sortDirection = 1;
+        sortColumn = columnIndex;
+    }
 
+    songList.sort((a, b) => {
+        const columnA = getColumnValue(a, columnIndex);
+        const columnB = getColumnValue(b, columnIndex);
+
+        // Compare values based on the sort direction
+        if (columnA < columnB) return -sortDirection;
+        if (columnA > columnB) return sortDirection;
+        return 0;
+    });
+
+    // Redraw the table after sorting
+    renderTable();
+}
+
+function getColumnValue(song, columnIndex) {
+    switch (columnIndex) {
+        case 0: return song.title;
+        case 1: return song.artist.name;
+        case 2: return song.year;
+        case 3: return song.details.popularity;
+        case 4: return song.genre.name;
+        default: return null;
+    }
+}
+
+function renderTable() {
+    // Clear the existing table
+    table.innerHTML = "";
+
+    // Rebuild the table with the sorted data
+    const headerRow = table.insertRow(0);
+    headers.forEach((headerText, i) => {
+        const header = document.createElement("th");
+        header.innerHTML = `<b>${headerText}</b>`;
+        header.addEventListener("click", () => sortTable(i));
+        headerRow.appendChild(header);
+    });
+
+    for (const song of songList) {
+        const row = table.insertRow();
+        const cells = [song.title, song.artist.name, song.year, song.details.popularity, song.genre.name];
+
+        for (const cellData of cells) {
+            const cell = row.insertCell();
+            cell.innerHTML = cellData;
+        }
+    }
+
+    tableContainer.innerHTML = ""; // Clear the container
+    tableContainer.appendChild(table); // Append the sorted table
+}
+
+// Initial rendering of the table
+renderTable();
 
  // const songList = JSON.parse(songsFile);
 
