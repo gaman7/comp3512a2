@@ -13,13 +13,15 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 
+
+  
   const select = document.createElement('select');
-  const loader = document.createElement('div');
-  loader.textContent = 'Loading...';
+  // const loader = document.createElement('div');
+  // loader.textContent = 'Loading...';
 
   
   document.body.appendChild(select);
-  document.body.appendChild(loader);
+  // document.body.appendChild(loader);
 
   const artistAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
 
@@ -35,9 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       
-      loader.style.display = 'none';
+      // loader.style.display = 'none';
      
-      select.style.display = 'block';
+      // select.style.display = 'block';
     })
     .catch(error => {
       console.error('Error fetching artists:', error);
@@ -65,19 +67,64 @@ document.addEventListener("DOMContentLoaded", function () {
 //   document.write(`</select>`);
 
 
-//   //genre dropdown
-  document.write("<h2>Selecting Genres</h2>");
-const genres=JSON.parse(tempGenres);
-function outputArtist(genre) {
-    document.write(`<option value="${genre.id}">${genre.name}</option>`);
-  }
+//   //genre dropdown url 
+
+
+document.addEventListener("DOMContentLoaded", function () {
+ 
+  const select = document.createElement('select');
+  // const loader = document.createElement('div');
+  // loader.textContent = 'Loading...';
+
+  
+  document.body.appendChild(select);
+  // document.body.appendChild(loader);
+
+  const genreAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
+  const heading = document.createElement('h3');
+  heading.textContent = 'Selecting Genres';
+
+  fetch(genreAPI)
+    .then(response => response.json())
+    .then(content => {
+      const songs = Array.isArray(content) ? content : [];
+
+      songs.forEach(song => {
+        const option = document.createElement('option');
+        option.textContent = song.genre.name;
+        select.appendChild(option);
+      });
+
+      
+      // loader.style.display = 'none';
+    
+      // select.style.display = 'block';
+    })
+    .catch(error => {
+      console.error('Error fetching genres:', error);
+    });
+});
+
+
+
+
+
+
+
+
+
+//   document.write("<h2>Selecting Genres</h2>");
+// const genres=JSON.parse(tempGenres);
+// function outputArtist(genre) {
+//     document.write(`<option value="${genre.id}">${genre.name}</option>`);
+//   }
   
 
-  document.write(`<select id="genreSelect">`);
-  for (let genre of genres) {
-    outputArtist(genre);
-  }
-  document.write(`</select>`);
+//   document.write(`<select id="genreSelect">`);
+//   for (let genre of genres) {
+//     outputArtist(genre);
+//   }
+//   document.write(`</select>`);
 
 //songs
 const songList = JSON.parse(songsFile);
