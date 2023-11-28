@@ -107,12 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-
-
-
-
 //   document.write("<h2>Selecting Genres</h2>");
 // const genres=JSON.parse(tempGenres);
 // function outputArtist(genre) {
@@ -126,8 +120,10 @@ document.addEventListener("DOMContentLoaded", function () {
 //   }
 //   document.write(`</select>`);
 
-//songs
-const songList = JSON.parse(songsFile);
+
+
+//songs using url 
+
 
 let sortColumn = null;
 let sortDirection = 1;
@@ -160,15 +156,14 @@ function getColumnValue(song, columnIndex) {
     return value;
 }
 
-
-function makeTable() {
+function makeTable(songs) {
     table.innerHTML = "";
     const headerRow = table.insertRow(0);
     for (const headerText of headers) {
         headerRow.appendChild(createHeaderCell(headerText, headers.indexOf(headerText)));
     }
 
-    for (const song of songList) {
+    for (const song of songs) {
         const row = table.insertRow();
         for (const headerText of headers) {
             const cell = row.insertCell();
@@ -180,10 +175,10 @@ function makeTable() {
     tableContainer.appendChild(table);
 }
 
-makeTable();
-
 function sortTable(columnIndex) {
-    if (columnIndex === sortColumn) {
+    if (sortColumn === null) {
+        sortColumn = columnIndex;
+    } else if (sortColumn === columnIndex) {
         sortDirection *= -1;
     } else {
         sortDirection = 1;
@@ -196,8 +191,100 @@ function sortTable(columnIndex) {
         return columnA < columnB ? -sortDirection : (columnA > columnB ? sortDirection : 0);
     });
 
-    makeTable();
+    makeTable(songList);
 }
+
+const url = "https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php";
+
+fetch(url)
+    .then(response => response.json())
+    .then(songs => {
+        songList = songs; 
+        makeTable(songs);
+
+        headers.forEach((header, index) => {
+            const headerCell = headerRow.cells[index];
+            headerCell.addEventListener("click", function() {
+                sortTable(index);
+            });
+        });
+    })
+    .catch(error => console.error("Error fetching data:", error));
+
+
+
+//songs
+// const songList = JSON.parse(songsFile);
+
+// let sortColumn = null;
+// let sortDirection = 1;
+
+// const tableContainer = document.getElementById("table-container");
+// const table = document.createElement("table");
+
+// const headers = ["Title ^", "Artist ^", "Year ^", "Popularity ^", "Genre ^"];
+
+// function createHeaderCell(headerText, columnIndex) {
+//     const header = document.createElement("th");
+//     header.innerHTML = "<b>" + headerText + "</b>";
+//     header.addEventListener("click", function() {
+//         sortTable(columnIndex);
+//     });
+//     return header;
+// }
+
+// const headerRow = table.insertRow(0);
+// for (const headerText of headers) {
+//     headerRow.appendChild(createHeaderCell(headerText, headers.indexOf(headerText)));
+// }
+
+// function getColumnValue(song, columnIndex) {
+//     const column = ["title", "artist.name", "year", "details.popularity", "genre.name"];
+//     let value = song;
+//     for (const prop of column[columnIndex].split('.')) {
+//         value = value && value[prop];
+//     }
+//     return value;
+// }
+
+
+// function makeTable() {
+//     table.innerHTML = "";
+//     const headerRow = table.insertRow(0);
+//     for (const headerText of headers) {
+//         headerRow.appendChild(createHeaderCell(headerText, headers.indexOf(headerText)));
+//     }
+
+//     for (const song of songList) {
+//         const row = table.insertRow();
+//         for (const headerText of headers) {
+//             const cell = row.insertCell();
+//             cell.innerHTML = getColumnValue(song, headers.indexOf(headerText));
+//         }
+//     }
+
+//     tableContainer.innerHTML = "";
+//     tableContainer.appendChild(table);
+// }
+
+// makeTable();
+
+// function sortTable(columnIndex) {
+//     if (columnIndex === sortColumn) {
+//         sortDirection *= -1;
+//     } else {
+//         sortDirection = 1;
+//         sortColumn = columnIndex;
+//     }
+
+//     songList.sort(function(a, b) {
+//         const columnA = getColumnValue(a, columnIndex);
+//         const columnB = getColumnValue(b, columnIndex);
+//         return columnA < columnB ? -sortDirection : (columnA > columnB ? sortDirection : 0);
+//     });
+
+//     makeTable();
+// }
 
 
 
