@@ -6,21 +6,66 @@
 // sample-songs.json data. Implement the column sort as well. To submit your milestone,
 // simply email me with the URL of the home page of the site on github pages.
 
-//artist dropdown
-document.write("<h2>Selecting Artists</h2>");
-const artists = JSON.parse(content);
-function outputArtist(artist) {
-    document.write(`<option value="${artist.id}">${artist.name}">${artist.type}</option>`);
-  }
+
+
+//data fetching through url 
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+  const select = document.createElement('select');
+  const loader = document.createElement('div');
+  loader.textContent = 'Loading...';
+
   
-  document.write(`<select id="artistSelect">`);
-  for (let artist of artists) {
-    outputArtist(artist);
-  }
-  document.write(`</select>`);
+  document.body.appendChild(select);
+  document.body.appendChild(loader);
+
+  const artistAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
+
+  fetch(artistAPI)
+    .then(response => response.json())
+    .then(content => {
+      const songs = Array.isArray(content) ? content : [];
+
+      songs.forEach(song => {
+        const option = document.createElement('option');
+        option.textContent = song.artist.name;
+        select.appendChild(option);
+      });
+
+      
+      loader.style.display = 'none';
+     
+      select.style.display = 'block';
+    })
+    .catch(error => {
+      console.error('Error fetching artists:', error);
+    });
+});
 
 
-  //genre dropdown
+
+
+
+
+
+
+//artist dropdown
+// document.write("<h2>Selecting Artists</h2>");
+// const artists = JSON.parse(content);
+// function outputArtist(artist) {
+//     document.write(`<option value="${artist.id}">${artist.name}">${artist.type}</option>`);
+//   }
+  
+//   document.write(`<select id="artistSelect">`);
+//   for (let artist of artists) {
+//     outputArtist(artist);
+//   }
+//   document.write(`</select>`);
+
+
+//   //genre dropdown
   document.write("<h2>Selecting Genres</h2>");
 const genres=JSON.parse(tempGenres);
 function outputArtist(genre) {
