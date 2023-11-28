@@ -8,43 +8,107 @@
 
 
 
-//data fetching through url 
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
+  const selectArtists = document.createElement('select');
+  const selectGenres = document.createElement('select');
+  const tableContainer = document.createElement('div');
+  const loader = document.createElement('div');
+  loader.textContent = 'Loading...';
 
+  document.body.appendChild(selectArtists);
+  document.body.appendChild(selectGenres);
+  document.body.appendChild(tableContainer);
+  document.body.appendChild(loader);
 
+  const url = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
 
-  
-  const select = document.createElement('select');
-  // const loader = document.createElement('div');
-  // loader.textContent = 'Loading...';
-
-  
-  document.body.appendChild(select);
-  // document.body.appendChild(loader);
-
-  const artistAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
-
-  fetch(artistAPI)
+  fetch(url)
     .then(response => response.json())
-    .then(content => {
-      const songs = Array.isArray(content) ? content : [];
+    .then(data => {
+      const songs = Array.isArray(data) ? data : [];
 
-      songs.forEach(song => {
-        const option = document.createElement('option');
-        option.textContent = song.artist.name;
-        select.appendChild(option);
+      // Extract unique artists
+      const artists = [...new Set(songs.map(song => song.artist.name))];
+      // Extract unique genres
+      const genres = [...new Set(songs.map(song => song.genre.name))];
+
+      // Populate select dropdown for artists
+      artists.forEach(artist => {
+        const optionArtist = document.createElement('option');
+        optionArtist.textContent = artist;
+        selectArtists.appendChild(optionArtist);
       });
 
-      
-      // loader.style.display = 'none';
-     
-      // select.style.display = 'block';
+      // Populate select dropdown for genres
+      genres.forEach(genre => {
+        const optionGenre = document.createElement('option');
+        optionGenre.textContent = genre;
+        selectGenres.appendChild(optionGenre);
+      });
+
+      // Create and sort the table
+      makeTable(songs);
+
+      headers.forEach((header, index) => {
+        const headerCell = headerRow.cells[index];
+        headerCell.addEventListener('click', function () {
+          sortTable(index);
+        });
+      });
+
+      loader.style.display = 'none';
+      tableContainer.style.display = 'block';
     })
     .catch(error => {
-      console.error('Error fetching artists:', error);
+      console.error('Error fetching data:', error);
+      loader.textContent = 'Error fetching data';
     });
 });
+
+
+
+
+
+//data fetching through url 
+
+
+// document.addEventListener("DOMContentLoaded", function () {
+
+//   const select = document.createElement('select');
+//   // const loader = document.createElement('div');
+//   // loader.textContent = 'Loading...';
+
+  
+//   document.body.appendChild(select);
+//   // document.body.appendChild(loader);
+
+//   const artistAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
+
+//   fetch(artistAPI)
+//     .then(response => response.json())
+//     .then(content => {
+//       const songs = Array.isArray(content) ? content : [];
+
+//       songs.forEach(song => {
+//         const option = document.createElement('option');
+//         option.textContent = song.artist.name;
+//         select.appendChild(option);
+//       });
+
+      
+//       // loader.style.display = 'none';
+     
+//       // select.style.display = 'block';
+//     })
+//     .catch(error => {
+//       console.error('Error fetching artists:', error);
+//     });
+// });
 
 
 
@@ -69,41 +133,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //   //genre dropdown url 
 
+// const heading = document.createElement('h3');
+// heading.textContent = 'Selecting Genres';
 
-document.addEventListener("DOMContentLoaded", function () {
+// document.addEventListener("DOMContentLoaded", function () {
  
-  const select = document.createElement('select');
-  // const loader = document.createElement('div');
-  // loader.textContent = 'Loading...';
+//   const select = document.createElement('select');
+//   // const loader = document.createElement('div');
+//   // loader.textContent = 'Loading...';
 
   
-  document.body.appendChild(select);
-  // document.body.appendChild(loader);
+//   document.body.appendChild(select);
+//   // document.body.appendChild(loader);
 
-  const genreAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
-  const heading = document.createElement('h3');
-  heading.textContent = 'Selecting Genres';
+//   const genreAPI = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
 
-  fetch(genreAPI)
-    .then(response => response.json())
-    .then(content => {
-      const songs = Array.isArray(content) ? content : [];
 
-      songs.forEach(song => {
-        const option = document.createElement('option');
-        option.textContent = song.genre.name;
-        select.appendChild(option);
-      });
+//   fetch(genreAPI)
+//     .then(response => response.json())
+//     .then(content => {
+//       const songs = Array.isArray(content) ? content : [];
+
+//       songs.forEach(song => {
+//         const option = document.createElement('option');
+//         option.textContent = song.genre.name;
+//         select.appendChild(option);
+//       });
 
       
-      // loader.style.display = 'none';
+//       // loader.style.display = 'none';
     
-      // select.style.display = 'block';
-    })
-    .catch(error => {
-      console.error('Error fetching genres:', error);
-    });
-});
+//       // select.style.display = 'block';
+//     })
+//     .catch(error => {
+//       console.error('Error fetching genres:', error);
+//     });
+// });
 
 
 
@@ -194,22 +259,22 @@ function sortTable(columnIndex) {
     makeTable(songList);
 }
 
-const url = "https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php";
+// const url = "https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php";
 
-fetch(url)
-    .then(response => response.json())
-    .then(songs => {
-        songList = songs; 
-        makeTable(songs);
+// fetch(url)
+//     .then(response => response.json())
+//     .then(songs => {
+//         songList = songs; 
+//         makeTable(songs);
 
-        headers.forEach((header, index) => {
-            const headerCell = headerRow.cells[index];
-            headerCell.addEventListener("click", function() {
-                sortTable(index);
-            });
-        });
-    })
-    .catch(error => console.error("Error fetching data:", error));
+//         headers.forEach((header, index) => {
+//             const headerCell = headerRow.cells[index];
+//             headerCell.addEventListener("click", function() {
+//                 sortTable(index);
+//             });
+//         });
+//     })
+//     .catch(error => console.error("Error fetching data:", error));
 
 
 

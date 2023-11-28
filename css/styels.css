@@ -1,0 +1,30 @@
+header {
+    /* background-color: #333; Background color for the header */
+    background-color: #04471C; /* Background color for the header */
+
+    color: #fff; /* Text color for the header */
+    padding: 20px 0; /* Padding on top and bottom of the header */
+    text-align: center; /* Center-align the content within the header */
+}
+
+footer {
+    background-color: #0D2818; /* Background color for the footer */
+    color: #fff; /* Text color for the footer */
+    padding: 20px 0; /* Padding on top and bottom of the footer */
+    text-align: center; /* Center-align the content within the footer */
+    margin-top: 320px;
+}
+
+footer p {
+    margin: 5px 0; /* Add spacing between paragraphs within the footer */
+}
+
+footer a {
+    text-decoration: none; /* Remove underline from links */
+    color: #fff; /* Text color for links in the footer */
+    font-weight: bold; /* Make links bold */
+}
+
+footer a:hover {
+    text-decoration: underline; /* Underline links on hover */
+}
