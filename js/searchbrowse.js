@@ -15,11 +15,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const url = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
 
+
+    // Check if data is already in localStorage
+  const cachedData = localStorage.getItem('songData');
+
+  if (cachedData) {
+    // If data is in localStorage, use it directly
+    const songs = JSON.parse(cachedData);
+    processData(songs);
+  } else {
+    // If data is not in localStorage, fetch it from the API
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        // Store data in localStorage for future use
+        localStorage.setItem('songData', JSON.stringify(data));
+
+        // Process and display the data
+        processData(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        loader.textContent = 'Error fetching data';
+      });
+  }
+
+  function processData(songs) {
+    // Rest of your code to populate dropdowns and create the table
+    // ...
+
+    // Display the table and hide the loader
+    loader.style.display = 'none';
+    tableContainer.style.display = 'block';
+  }
+
+
   fetch(url)
     .then(response => response.json())
     .then(data => {
       const songs = Array.isArray(data) ? data : [];
 
+
+
+    
       // Extract unique artists
       const artists = [...new Set(songs.map(song => song.artist.name))];
       // Extract unique genres
