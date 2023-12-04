@@ -1,7 +1,5 @@
 
-//recent version with buttons 
-
-
+// recent version with buttons and input
 document.addEventListener("DOMContentLoaded", function () {
     const tableContainer = document.getElementById("table-container");
     const dropdown = document.getElementById("dropdown");
@@ -27,6 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
     labelArtists.textContent = 'Artists';
     labelArtists.htmlFor = 'radioArtists';
 
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.placeholder = 'Filter by Title';
+
     const loader = document.createElement('div');
     loader.textContent = 'Loading...';
 
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     dropdown.appendChild(labelArtists);
     dropdown.appendChild(selectArtists);
     dropdown.appendChild(selectGenres);
+    dropdown.appendChild(titleInput);
     dropdown.appendChild(loader);
 
     const addButton = document.createElement('button');
@@ -210,18 +213,22 @@ document.addEventListener("DOMContentLoaded", function () {
     function applyFilter() {
         const selectedFilterType = document.querySelector('input[name="filterType"]:checked').value;
         const selectedValue = (selectedFilterType === 'genres') ? selectGenres.value : selectArtists.value;
+        const titleFilter = titleInput.value.toLowerCase(); // Get the title filter value
 
-        // Apply the filter based on selected filter type and value
+        // Apply the filter based on selected filter type, value, and title filter
         let filteredSongs = songs;
 
         if (selectedValue) {
             filteredSongs = filteredSongs.filter(song => {
                 if (selectedFilterType === 'genres') {
-                    return song.genre.name === selectedValue;
+                    return song.genre.name === selectedValue && song.title.toLowerCase().includes(titleFilter);
                 } else if (selectedFilterType === 'artists') {
-                    return song.artist.name === selectedValue;
+                    return song.artist.name === selectedValue && song.title.toLowerCase().includes(titleFilter);
                 }
             });
+        } else {
+            // Apply only title filter if no artist or genre is selected
+            filteredSongs = filteredSongs.filter(song => song.title.toLowerCase().includes(titleFilter));
         }
 
         // Update the table with the filtered songs
@@ -231,24 +238,10 @@ document.addEventListener("DOMContentLoaded", function () {
     function clearSelection() {
         const selectedCells = document.querySelectorAll('.selected');
         selectedCells.forEach(cell => cell.classList.remove('selected'));
-        
+
         document.querySelector('input[name="filterType"]:checked').checked = false;
-    
-        
+        titleInput.value = ''; // Clear the title filter input
+
         makeTable(songs);
     }
 });
-
-
-  
-
-
-     
-   
- 
-
-
-
-
-
-
