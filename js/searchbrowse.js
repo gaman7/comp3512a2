@@ -4,14 +4,16 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const tableContainer = this.getElementById("table-container");
+    const dropdown = this.getElementById("dropdown");
+
     const selectArtists = document.createElement('select');
     const selectGenres = document.createElement('select');
     const loader = document.createElement('div');
     loader.textContent = 'Loading...';
 
-    tableContainer.appendChild(selectArtists);
-    tableContainer.appendChild(selectGenres);
-    tableContainer.appendChild(loader);
+    dropdown.appendChild(selectArtists);
+    dropdown.appendChild(selectGenres);
+    dropdown.appendChild(loader);
   
     const url = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
   
