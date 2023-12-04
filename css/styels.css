@@ -28,3 +28,12 @@ footer a {
 footer a:hover {
     text-decoration: underline; /* Underline links on hover */
 }
+
+tr.selected {
+    background-color: lightblue; 
+}
+
+tr:hover {
+    background-color: lightblue; 
+    cursor: pointer;
+}
