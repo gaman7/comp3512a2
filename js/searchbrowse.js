@@ -14,6 +14,13 @@ document.addEventListener("DOMContentLoaded", function () {
     dropdown.appendChild(selectArtists);
     dropdown.appendChild(selectGenres);
     dropdown.appendChild(loader);
+
+    const addButton = document.createElement('button');
+    addButton.textContent = 'Add';
+    addButton.addEventListener('click', function () {
+        window.location.href = 'js/playListView.js'; 
+    });
+    dropdown.appendChild(addButton);
   
     const url = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
   
