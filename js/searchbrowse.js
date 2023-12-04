@@ -1,15 +1,39 @@
 
-//recent version 
-  //trial 
-  document.addEventListener("DOMContentLoaded", function () {
+//recent version with buttons 
+
+
+document.addEventListener("DOMContentLoaded", function () {
     const tableContainer = document.getElementById("table-container");
     const dropdown = document.getElementById("dropdown");
 
     const selectArtists = document.createElement('select');
     const selectGenres = document.createElement('select');
+
+    const radioGenres = document.createElement('input');
+    radioGenres.type = 'radio';
+    radioGenres.name = 'filterType';
+    radioGenres.value = 'genres';
+    radioGenres.id = 'radioGenres';
+    const labelGenres = document.createElement('label');
+    labelGenres.textContent = 'Genres';
+    labelGenres.htmlFor = 'radioGenres';
+
+    const radioArtists = document.createElement('input');
+    radioArtists.type = 'radio';
+    radioArtists.name = 'filterType';
+    radioArtists.value = 'artists';
+    radioArtists.id = 'radioArtists';
+    const labelArtists = document.createElement('label');
+    labelArtists.textContent = 'Artists';
+    labelArtists.htmlFor = 'radioArtists';
+
     const loader = document.createElement('div');
     loader.textContent = 'Loading...';
 
+    dropdown.appendChild(radioGenres);
+    dropdown.appendChild(labelGenres);
+    dropdown.appendChild(radioArtists);
+    dropdown.appendChild(labelArtists);
     dropdown.appendChild(selectArtists);
     dropdown.appendChild(selectGenres);
     dropdown.appendChild(loader);
@@ -17,25 +41,37 @@
     const addButton = document.createElement('button');
     addButton.textContent = 'Add';
     addButton.addEventListener('click', function () {
-    
         const selectedSongs = getSelectedSongs();
         localStorage.setItem('selectedSongs', JSON.stringify(selectedSongs));
         window.location.href = 'js/playlistView.js';
     });
     dropdown.appendChild(addButton);
 
+    const filterButton = document.createElement('button');
+    filterButton.textContent = 'Filter';
+    filterButton.addEventListener('click', function () {
+        applyFilter();
+    });
+    dropdown.appendChild(filterButton);
+
+    const clearButton = document.createElement('button');
+    clearButton.textContent = 'Clear';
+    clearButton.addEventListener('click', function () {
+        clearSelection();
+    });
+    dropdown.appendChild(clearButton);
 
     function toggleRowSelection(row) {
-      row.classList.toggle("selected");
-  }
+        row.classList.toggle("selected");
+    }
 
-  tableContainer.addEventListener("click", function (event) {
-      const clickedElement = event.target;
+    tableContainer.addEventListener("click", function (event) {
+        const clickedElement = event.target;
 
-      if (clickedElement.tagName === "TD" && clickedElement.parentNode.tagName === "TR") {
-          toggleRowSelection(clickedElement.parentNode);
-      }
-  });
+        if (clickedElement.tagName === "TD" && clickedElement.parentNode.tagName === "TR") {
+            toggleRowSelection(clickedElement.parentNode);
+        }
+    });
 
     const url = 'https://www.randyconnolly.com/funwebdev/3rd/api/music/songs-nested.php';
 
@@ -170,9 +206,38 @@
         const selectedSongIds = Array.from(selectedCells).map(cell => cell.dataset.songId);
         return selectedSongIds;
     }
+
+    function applyFilter() {
+        const selectedFilterType = document.querySelector('input[name="filterType"]:checked').value;
+        const selectedValue = (selectedFilterType === 'genres') ? selectGenres.value : selectArtists.value;
+
+        // Apply the filter based on selected filter type and value
+        let filteredSongs = songs;
+
+        if (selectedValue) {
+            filteredSongs = filteredSongs.filter(song => {
+                if (selectedFilterType === 'genres') {
+                    return song.genre.name === selectedValue;
+                } else if (selectedFilterType === 'artists') {
+                    return song.artist.name === selectedValue;
+                }
+            });
+        }
+
+        // Update the table with the filtered songs
+        makeTable(filteredSongs);
+    }
+
+    function clearSelection() {
+        const selectedCells = document.querySelectorAll('.selected');
+        selectedCells.forEach(cell => cell.classList.remove('selected'));
+        
+        document.querySelector('input[name="filterType"]:checked').checked = false;
+    
+        
+        makeTable(songs);
+    }
 });
-
-
 
 
   
