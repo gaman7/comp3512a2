@@ -1,36 +1,44 @@
 //play list view page 
 document.addEventListener("DOMContentLoaded", function () {
-    const selectedSongs = JSON.parse(localStorage.getItem('selectedSongs')) || [];
-    displaySelectedSongs(selectedSongs);
-});
-
-function displaySelectedSongs(songs) {
     const playlistContainer = document.getElementById("playlist-container");
 
-    const table = document.createElement("table");
-    const headerRow = table.insertRow();
+    // Retrieve selected songs from local storage
+    const selectedSongs = JSON.parse(localStorage.getItem('selectedSongs')) || [];
+
+    // Create a table to display the selected songs
+    const playlistTable = document.createElement("table");
+    const headerRow = playlistTable.insertRow(0);
+
     const headers = ["Title", "Artist", "Year", "Popularity", "Genre"];
-    
-    // Create table headers
-    headers.forEach(headerText => {
-        const headerCell = document.createElement("th");
-        headerCell.textContent = headerText;
-        headerRow.appendChild(headerCell);
-    });
 
-    // Create table rows for selected songs
-    songs.forEach(song => {
-        const row = table.insertRow();
-        const columns = ["title", "artist", "year", "popularity", "genre"];
+    for (const headerText of headers) {
+        const header = document.createElement("th");
+        header.textContent = headerText;
+        headerRow.appendChild(header);
+    }
 
-        columns.forEach(column => {
-            const cell = row.insertCell();
-            cell.textContent = song[column];
-        });
-    });
+    // Populate the table with selected songs
+    for (const title of selectedSongs) {
+        const song = getSongByTitle(title); // Assuming you have a function to retrieve song details by title
+        if (song) {
+            const row = playlistTable.insertRow();
+            const values = [song.title, song.artist.name, song.year, song.details.popularity, song.genre.name];
 
-    playlistContainer.appendChild(table);
-}
+            for (const value of values) {
+                const cell = row.insertCell();
+                cell.textContent = value;
+            }
+        }
+    }
+
+    playlistContainer.appendChild(playlistTable);
+
+    function getSongByTitle(title) {
+        // Retrieve song details from the stored data
+        const songData = JSON.parse(localStorage.getItem('songData')) || [];
+        return songData.find(song => song.title === title);
+    }
+});
 
 
 
