@@ -84,12 +84,17 @@ document.addEventListener("DOMContentLoaded", function () {
     let sortColumn = null;
     let sortDirection = 1;
 
+    let songStorage=localStorage.getItem("songs");
+    if(songStorage){
+        songs.push(...JSON.parse(songStorage));
+
+    }
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
             // Store data in localStorage for future use
             localStorage.setItem('songData', JSON.stringify(data));
-
             // Assign the data to the songs variable
             songs = Array.isArray(data) ? data : [];
 
