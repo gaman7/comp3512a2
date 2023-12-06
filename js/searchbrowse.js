@@ -213,35 +213,87 @@ document.addEventListener("DOMContentLoaded", function () {
      
     }
 
+
     function addToPlaylist(selectedSongs) {
-        const playlistTable = document.getElementById("playlist-table");
-    
-        for (const songId of selectedSongs) {
-            const song = songs.find(song => song.id === songId);
-    
-            if (song) {
-                const row = playlistTable.insertRow();
-                const keysToDisplay = ["id", "title", "year", "artist", "popularity", "genre"];
-    
-                keysToDisplay.forEach(key => {
-                    const cell = row.insertCell();
-                    if (key === "artist" || key === "genre" || key==="title") {
-                        cell.innerHTML = song[key].name || "";
-                    } else {
-                        cell.innerHTML = song[key] || "";
-                    }
+    const playlistTable = document.getElementById("playlist-table");
+
+    for (const songId of selectedSongs) {
+        const song = songs.find(song => song.song_id == songId);
+
+        if (song) {
+            
+            const row = playlistTable.insertRow();
+                // Add an event listener to each row for transitioning to Single Song View
+                row.addEventListener('click', function () {
+                    showSingleSongView(song);
                 });
-            } else {
-                console.error("Song not found for id:", songId);
-            }
-      
+            const keysToDisplay = ["title", "year", "artist.name", "details.popularity", "genre.name"];
+
+            keysToDisplay.forEach(key => {
+                const cell = row.insertCell();
+                const keyParts = key.split('.');
+                let value = song;
+                for (const part of keyParts) {
+                    value = value && value[part];
+                }
+                cell.innerHTML = value || "";
+            });
+        } else {
+            console.log("found the selected song");
+        }
     }
+    
 }
+
+function hidePlaylistView() {
+    playlistContainer.style.display = 'none';
+}
+
+    function showSingleSongView(song){
+        hidePlaylistView();
+        const singleSongContainer = document.getElementById("single-song-container");
+
+        
+        const titleElement = document.createElement('p');
+        titleElement.textContent ="Title:"+ song.title;
+
+        const artistElement = document.createElement('p');
+        artistElement.textContent = "Artist: " + song.artist.name;
+
+        const yearElement = document.createElement('p');
+        yearElement.textContent = "Year: " + song.year;
+
+        const artistType=document.createElement('p');
+        artistType.textContent="ArtistType: "+song.artist.id;
+
+        const genre=document.createElement('p');
+        genre.textContent="Genre:"+song.genre.name;
+
+        const duration=document.createElement('p');
+        duration.textContent="Duration:"+song.details.duration;
+
+       
+        singleSongContainer.appendChild(titleElement);
+        singleSongContainer.appendChild(artistElement);
+        singleSongContainer.appendChild(yearElement);
+        singleSongContainer.appendChild(artistType);
+        singleSongContainer.appendChild(genre);
+        singleSongContainer.appendChild(duration);
+        
+        singleSongContainer.style.display = 'block';
+
+    }
+
+
+
+
     function hideSearchPage() {
         tableContainer.style.display = 'none';
         dropdown.style.display = 'none';
         playlistContainer.style.display = 'block';
     }
+
+
 
         function applyFilter() {
         const selectedFilterType = document.querySelector('input[name="filterType"]:checked').value;
