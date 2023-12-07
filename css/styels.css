@@ -34,6 +34,56 @@ tr.selected {
 }
 
 tr:hover {
-    background-color: lightblue; 
+    color: #04771C;
     cursor: pointer;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Adjust as needed */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #2E7D32; /* Dark green for header */
+    color: #fff;
+}
+
+td {
+    background-color: #4CAF50; /* Light green for table cells */
+    color: #fff;
+}
+
+button {
+    background-color: #04471C; /* Dark green for buttons */
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #022E10; /* Slightly darker green on hover */
+}
+
+tr.selected {
+    background-color: #04771C; /* Dark green for selected rows */
+    color: #fff;
+}
+
+tr:hover {
+    background-color: #04771C; /* Dark green on hover */
+    cursor: pointer;
+    color: #fff;
+}
+
+
+
+
+
