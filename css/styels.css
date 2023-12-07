@@ -83,6 +83,12 @@ tr:hover {
     color: #fff;
 }
 
+h2.hidden {
+    display: none;
+  }
+
+  
+
 
 
 

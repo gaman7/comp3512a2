@@ -28,6 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const titleInput = document.createElement('input');
     titleInput.type = 'text';
     titleInput.placeholder = 'Filter by Title';
+    titleInput.id = 'titleFilter';
+    const titleRadio = document.createElement('input');
+    titleRadio.type = 'radio';
+    titleRadio.name = 'filterType';
+    titleRadio.value = 'title';
+    titleRadio.id = 'radioTitle';
+
+
 
     const loader = document.createElement('div');
     loader.textContent = 'Loading...';
@@ -39,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     dropdown.appendChild(selectArtists);
     dropdown.appendChild(selectGenres);
     dropdown.appendChild(titleInput);
+    dropdown.appendChild(titleRadio);
     dropdown.appendChild(loader);
 
 
@@ -311,13 +320,25 @@ function hidePlaylistView() {
 
         function applyFilter() {
         const selectedFilterType = document.querySelector('input[name="filterType"]:checked').value;
-        const selectedValue = (selectedFilterType === 'genres') ? selectGenres.value : selectArtists.value;
-        const titleFilter = titleInput.value.toLowerCase(); // Get the title filter value
+
+       
+        const titleFilter = titleInput.value.toLowerCase();
     
-        // Apply the filter based on selected filter type, value, and title filter
+        
+        let selectedValue;
+        if (selectedFilterType === 'genres') {
+            selectedValue = selectGenres.value;
+        } else if (selectedFilterType === 'artists') {
+            selectedValue = selectArtists.value;
+        } else if (selectedFilterType === 'title') {
+            
+            selectedValue = '';
+        }
+    
+        
         let filteredSongs = songs;
     
-        if (selectedValue) {
+        if (selectedFilterType !== 'title' && selectedValue) {
             filteredSongs = filteredSongs.filter(song => {
                 if (selectedFilterType === 'genres') {
                     return song.genre.name === selectedValue && song.title.toLowerCase().includes(titleFilter);
@@ -325,18 +346,17 @@ function hidePlaylistView() {
                     return song.artist.name === selectedValue && song.title.toLowerCase().includes(titleFilter);
                 }
             });
-        } else {
+        } else if (selectedFilterType === 'title') {
            
             filteredSongs = filteredSongs.filter(song => song.title.toLowerCase().includes(titleFilter));
         }
     
-        
         makeTable(filteredSongs);
-       
     
-        
         tableContainer.style.display = filteredSongs.length > 0 ? 'block' : 'none';
     }
+
+    
 
         function clearSelection() {
         const selectedCells = document.querySelectorAll('.selected');
