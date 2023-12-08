@@ -237,19 +237,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function addToPlaylist(selectedSongs) {
+
     const playlistTable = document.getElementById("playlist-table");
 
     for (const songId of selectedSongs) {
         const song = songs.find(song => song.song_id == songId);
 
         if (song) {
-            
             const row = playlistTable.insertRow();
-                // Add an event listener to each row for transitioning to Single Song View
-                row.addEventListener('click', function () {
-                  
-                    showSingleSongView(song);
-                });
+
+            row.addEventListener('click', function () {
+                showSingleSongView(song);
+            });
+
             const keysToDisplay = ["title", "year", "artist.name", "details.popularity", "genre.name"];
 
             keysToDisplay.forEach(key => {
@@ -261,11 +261,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 cell.innerHTML = value || "";
             });
-        } else {
-            console.log("found the selected song");
+
+           
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', function () {
+                removeSongFromPlaylist(row);
+            });
+            const removeCell = row.insertCell();
+            removeCell.appendChild(removeButton);
+
+         
         }
     }
+
     
+}
+
+function removeSongFromPlaylist(row) {
+    const playlistTable = document.getElementById("playlist-table");
+    playlistTable.deleteRow(row.rowIndex);
 }
 
 function hidePlaylistView() {
