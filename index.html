@@ -5,39 +5,104 @@
     <script src="JSON/artists.json"></script>
     <script src="JSON/genres.json"></script>
     <script src="JSON/sample-songs.json"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script> -->
-    <link rel="stylesheet" type="text/css" href="./css/styels.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <link rel="stylesheet" type="text/css" href="./css/styels.css">
+
+    <style>
+        .headerButton {
+          background-color: #058c42;
+          color: white;
+          padding: 16px;
+          font-size: 16px;
+        }
+        
+        .headerButton:hover, .headerButton:focus {
+          background-color: #16db65;
+        }
+        
+        .panel {
+          position: relative;
+          display: inline-block;
+          
+        }
+        
+        .credit-content {
+          position: absolute;
+          background-color: white;
+          min-width: 150px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          bottom: 40px;
+        }
+        
+        .credit-content a {
+          color: black;
+          padding: 12px 16px;
+          display: block;
+        }
+        
+        .panel a:hover {
+            background-color: #16db65;
+            bottom: 100%;
+        }
+        
+        </style>
 </head>
 
 <body>
     <header>
         <h1>COMP 3512 Assign2</h1>
-        <h2> Marselya Ismael, Nicole Ranieri</h2>
-        <nav>
-           <!--if needed -->
+
+        <nav>  
+            <div class="panel">
+                <button onmouseover="creditDropdown()" class="headerButton">Credits</button>
+                <div id="creditButton" class="credit-content" style="display:none;">
+                  <a>By Marselya Ismael and Nicole Ranieri</a>
+                  <a href="https://github.com/gaman7/comp3512a2.git">Github url</a>
+                </div>
+              </div>
+              
         </nav>
     </header>
 
+    <!-- Search Container -->
     <div id="search-container">
+        <header class="secondaryHeader">
+            <nav>
+            <button id="playlistButton" class="headerButton">Playlist</button>
+        </nav>
+        </header>
     <h2>Browse/Search Songs</h2>
     <div id="dropdown"></div>
     <div id="table-container" style="width: 45%; display: inline-block; margin: 10px; padding: 10px; border: 1px solid #ccc;"></div>
     </div>
 
-    <!-- New Playlist Container -->
+
+    <!-- Playlist Container -->
     <div id="playlist-container" style="display: none;">
+        <header class="secondaryHeader">
+            <nav>
+            <button id="closeView" class="headerButton">Close View</button>
+        </nav>
+        </header>
         <h2>Playlist</h2>
         <table id="playlist-table"></table>
     </div>
-    <div id="single-song-container">
-      </div>
 
-      <div>
-        <canvas id="myChart"></canvas>
-      </div>
-      
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+    <!-- Single Song Container -->
+    <div id="single-song-container" style="display: none;">
+        <header class="secondaryHeader">
+            <nav>
+            <button id="closeView" class="headerButton">Close View</button>
+        </nav>
+        </header>
+        <h2>Song Information</h2>
+    </div>
+
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+    
+
+
     <footer>
         <p>Course Name: COMP 3512</p>
         <p>Copyright &copy; 2023 Marselya Ismael, Gaman Kaur, Nicole Ranieri</p>
