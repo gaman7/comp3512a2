@@ -161,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function makeTable(songs) {
+
         table.innerHTML = "";
         const headerRow = table.insertRow(0);
     
@@ -383,12 +384,6 @@ function hidePlaylistView() {
         analysisData.appendChild(speechiness);
         analysisData.appendChild(popularity);
         analysisData.appendChild(loudness);
-
-
-
-      
-
-
         
         singleSongContainer.style.display = 'block';
 
@@ -398,9 +393,9 @@ function hidePlaylistView() {
 
 
     function hideSearchPage() {
-        tableContainer.style.display = 'none';
-        dropdown.style.display = 'none';
-        playlistContainer.style.display = 'block';
+       document.getElementById("search-container").style.display = "none";
+ 
+         playlistContainer.style.display = 'block';
     }
 
 
