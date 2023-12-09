@@ -187,10 +187,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const addButton = document.createElement('button');
             addButton.textContent = 'Add';
             addButton.addEventListener('click', function (event) {
-                event.stopPropagation(); // Prevent the row click from being triggered
+                event.stopPropagation() ;// Prevent the row click from being triggered
                 const selectedSongs = [song.song_id];
                 addToPlaylist(selectedSongs);
-                hideSearchPage();
+                // hideSearchPage();
             });
             row.appendChild(addButton);
         }
@@ -266,7 +266,8 @@ document.addEventListener("DOMContentLoaded", function () {
            
             const removeButton = document.createElement('button');
             removeButton.textContent = 'Remove';
-            removeButton.addEventListener('click', function () {
+            removeButton.addEventListener('click', function (event) {
+                event.stopPropagation();
                 removeSongFromPlaylist(row);
             });
             const removeCell = row.insertCell();
@@ -450,6 +451,14 @@ function hidePlaylistView() {
 
         // makeTable(songs); because we do not need it 
     }
+// button to test that the playlist is working
+    const createPlaylistButton = document.createElement('button');
+    createPlaylistButton.textContent = 'Create Playlist';
+    createPlaylistButton.addEventListener('click', function () {
+    hideSearchPage();
+});
+   dropdown.appendChild(createPlaylistButton);
+
 
 
     
