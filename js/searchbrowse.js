@@ -10,12 +10,15 @@ function creditDropdown() {
     creditButton.style.display='none';
   }
 
+
+
 document.addEventListener("DOMContentLoaded", function () {
 
-    
-    
+    const artistList = JSON.parse(content);
     const tableContainer = document.getElementById("table-container");
     const playlistContainer = document.getElementById("playlist-container");
+    const singleSongContainer = document.getElementById("single-song-container");
+    const searchContainer = document.getElementById("search-container");
     const dropdown = document.getElementById("dropdown");
 
     const selectArtists = document.createElement('select');
@@ -83,6 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
         row.classList.toggle("selected");
     }
 
+   
+
     tableContainer.addEventListener("click", function (event) {
         const clickedElement = event.target;
 
@@ -147,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
      
         //const creditButton = document.getElementById("creditButton");
 
-      
+
 
     const headers = ["Title ^", "Artist ^", "Year ^", "Popularity ^", "Genre ^"];
     const table = document.createElement("table");
@@ -306,11 +311,46 @@ function hidePlaylistView() {
     playlistContainer.style.display = 'none';
 }
 
+function hideSingleSong(){
+    singleSongContainer.style.display = 'none';
+}
+
+function showSearchPage(){
+    searchContainer.style.display = 'block';
+}
+
+function toMinutes(time){
+    const minutes = Math.floor(time/60);
+    const seconds = time % 60;
+    return{
+        minutes: minutes,
+        seconds: seconds
+    };
+}
+
+const playlistButton = document.getElementById("playlistButton");
+playlistButton.addEventListener('click', function(){
+    hideSearchPage();
+})
+
+const closeButtonP = document.getElementById("closeViewPlaylist");
+closeButtonP.addEventListener('click', function(){
+    showSearchPage();
+    hidePlaylistView();
+})
+
+const closeButtonSS = document.getElementById("closeViewSS");
+closeButtonSS.addEventListener('click', function(){
+    showSearchPage();    
+    hideSingleSong();
+})
+
 
 
 function showSingleSongView(song){
     hidePlaylistView();
-    const singleSongContainer = document.getElementById("single-song-container");
+
+    singleSongContainer.style.display = 'block';
     
     const titleElement = document.createElement('p');
     titleElement.textContent ="Title:"+ song.title;
@@ -322,13 +362,14 @@ function showSingleSongView(song){
     yearElement.textContent = "Year: " + song.year;
 
     const artistType=document.createElement('p');
-    artistType.textContent="ArtistType: "+song.artist.type;
+    artistType.textContent="ArtistType: "+ artistList.type;
 
     const genre=document.createElement('p');
     genre.textContent="Genre:"+song.genre.name;
 
+    const totalTime = toMinutes(song.details.duration);
     const duration=document.createElement('p');
-    duration.textContent="Duration:"+song.details.duration;
+    duration.textContent="Duration: "+totalTime.minutes + ":" + totalTime.seconds;
 
     //analysis data list
     const analysisData=document.createElement('ul');
@@ -359,7 +400,7 @@ function showSingleSongView(song){
     popularity.textContent="Popularity: " + song.details.popularity;
 
     const loudness = document.createElement('li');
-    loudness.textContent="Popularity: " + song.details.loudness;
+    loudness.textContent="Loudness: " + song.details.loudness;
 
 
     const ctx = document.getElementById('myChart');
@@ -404,7 +445,7 @@ function showSingleSongView(song){
     analysisData.appendChild(popularity);
     analysisData.appendChild(loudness);
     
-    singleSongContainer.style.display = 'block';
+    
 
 }
 
@@ -469,23 +510,11 @@ function showSingleSongView(song){
 
         // makeTable(songs); because we do not need it 
     }
-// button to test that the playlist is working
+
    
-    const playlistButton = document.getElementById("playlistButton");
-    playlistButton.addEventListener('click', function(){
-        hideSearchPage();
-    })
+  
 
-    function hideSingleSong(){
-        singleSongContainer.style.display='none';
-    }
-
-    const closeButton = document.getElementById("closeView");
-    closeButton.addEventListener('click', function(){
-        hidePlaylistView();
-        hideSingleSong();
-    })
-
+    
 
 });
 
