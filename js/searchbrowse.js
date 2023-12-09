@@ -1,5 +1,19 @@
 // //version 2 
+
+const creditButton = document.getElementById("creditButton");
+function creditDropdown() {
+  creditButton.style.display='block';
+  const timeout = setTimeout(stopCredits, 5000);
+}
+
+  function stopCredits(){
+    creditButton.style.display='none';
+  }
+
 document.addEventListener("DOMContentLoaded", function () {
+
+    
+    
     const tableContainer = document.getElementById("table-container");
     const playlistContainer = document.getElementById("playlist-container");
     const dropdown = document.getElementById("dropdown");
@@ -131,6 +145,9 @@ document.addEventListener("DOMContentLoaded", function () {
             loader.textContent = 'Error fetching data';
         });
      
+        //const creditButton = document.getElementById("creditButton");
+
+      
 
     const headers = ["Title ^", "Artist ^", "Year ^", "Popularity ^", "Genre ^"];
     const table = document.createElement("table");
@@ -289,106 +306,107 @@ function hidePlaylistView() {
     playlistContainer.style.display = 'none';
 }
 
-    function showSingleSongView(song){
-        hidePlaylistView();
-        const singleSongContainer = document.getElementById("single-song-container");
-        singleSongContainer.textContent = "Song Information:"
-        
-        const titleElement = document.createElement('p');
-        titleElement.textContent ="Title:"+ song.title;
-
-        const artistElement = document.createElement('p');
-        artistElement.textContent = "Artist: " + song.artist.name;
-
-        const yearElement = document.createElement('p');
-        yearElement.textContent = "Year: " + song.year;
-
-        const artistType=document.createElement('p');
-        artistType.textContent="ArtistType: "+song.artist.type;
-
-        const genre=document.createElement('p');
-        genre.textContent="Genre:"+song.genre.name;
-
-        const duration=document.createElement('p');
-        duration.textContent="Duration:"+song.details.duration;
-
-        //analysis data list
-        const analysisData=document.createElement('ul');
-        analysisData.textContent="Analysis Data:";
-
-        const bpm = document.createElement('li');
-        bpm.textContent="BPM: " + song.details.bpm;
-
-        const energy = document.createElement('li');
-        energy.textContent="Energy: " + song.analytics.energy;
-
-        const danceability = document.createElement('li');
-        danceability.textContent="Danceability: " + song.analytics.danceability;
-
-        const liveness = document.createElement('li');
-        liveness.textContent="Liveness: " + song.analytics.liveness;
-
-        const valence = document.createElement('li');
-        valence.textContent="Valence: " + song.analytics.valence;
-
-        const acousticness = document.createElement('li');
-        acousticness.textContent="Acousticness: " + song.analytics.acousticness;
-
-        const speechiness = document.createElement('li');
-        speechiness.textContent="Speechiness: " + song.analytics.speechiness;
-
-        const popularity = document.createElement('li');
-        popularity.textContent="Popularity: " + song.details.popularity;
-
-        const loudness = document.createElement('li');
-        loudness.textContent="Popularity: " + song.details.loudness;
 
 
-        const ctx = document.getElementById('myChart');
-      
-        new Chart(ctx, {
-          type: 'radar',
-          data: {
-            labels: ['Danceability', 'Energy', 'Valence', 'Speechiness', 'Loudness', 'Liveness'],
-            datasets: [{
-              label: 'Title',
-              data: [song.analytics.danceability, song.analytics.energy, song.analytics.valence, 
-                song.analytics.speechiness, song.details.loudness, song.analytics.liveness],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: false
-              }
-            }
+function showSingleSongView(song){
+    hidePlaylistView();
+    const singleSongContainer = document.getElementById("single-song-container");
+    
+    const titleElement = document.createElement('p');
+    titleElement.textContent ="Title:"+ song.title;
+
+    const artistElement = document.createElement('p');
+    artistElement.textContent = "Artist: " + song.artist.name;
+
+    const yearElement = document.createElement('p');
+    yearElement.textContent = "Year: " + song.year;
+
+    const artistType=document.createElement('p');
+    artistType.textContent="ArtistType: "+song.artist.type;
+
+    const genre=document.createElement('p');
+    genre.textContent="Genre:"+song.genre.name;
+
+    const duration=document.createElement('p');
+    duration.textContent="Duration:"+song.details.duration;
+
+    //analysis data list
+    const analysisData=document.createElement('ul');
+    analysisData.textContent="Analysis Data:";
+
+    const bpm = document.createElement('li');
+    bpm.textContent="BPM: " + song.details.bpm;
+
+    const energy = document.createElement('li');
+    energy.textContent="Energy: " + song.analytics.energy;
+
+    const danceability = document.createElement('li');
+    danceability.textContent="Danceability: " + song.analytics.danceability;
+
+    const liveness = document.createElement('li');
+    liveness.textContent="Liveness: " + song.analytics.liveness;
+
+    const valence = document.createElement('li');
+    valence.textContent="Valence: " + song.analytics.valence;
+
+    const acousticness = document.createElement('li');
+    acousticness.textContent="Acousticness: " + song.analytics.acousticness;
+
+    const speechiness = document.createElement('li');
+    speechiness.textContent="Speechiness: " + song.analytics.speechiness;
+
+    const popularity = document.createElement('li');
+    popularity.textContent="Popularity: " + song.details.popularity;
+
+    const loudness = document.createElement('li');
+    loudness.textContent="Popularity: " + song.details.loudness;
+
+
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Danceability', 'Energy', 'Valence', 'Speechiness', 'Loudness', 'Liveness'],
+        datasets: [{
+          label: 'Title',
+          data: [song.analytics.danceability, song.analytics.energy, song.analytics.valence, 
+            song.analytics.speechiness, song.details.loudness, song.analytics.liveness],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false
           }
-        });
+        }
+      }
+    });
 
 
-       
-        singleSongContainer.appendChild(titleElement);
-        singleSongContainer.appendChild(artistElement);
-        singleSongContainer.appendChild(yearElement);
-        singleSongContainer.appendChild(artistType);
-        singleSongContainer.appendChild(genre);
-        singleSongContainer.appendChild(duration);
-        singleSongContainer.appendChild(analysisData);
+   
+    singleSongContainer.appendChild(titleElement);
+    singleSongContainer.appendChild(artistElement);
+    singleSongContainer.appendChild(yearElement);
+    singleSongContainer.appendChild(artistType);
+    singleSongContainer.appendChild(genre);
+    singleSongContainer.appendChild(duration);
+    singleSongContainer.appendChild(analysisData);
 
-        analysisData.appendChild(bpm);
-        analysisData.appendChild(energy);
-        analysisData.appendChild(danceability);
-        analysisData.appendChild(liveness);
-        analysisData.appendChild(valence);
-        analysisData.appendChild(acousticness);
-        analysisData.appendChild(speechiness);
-        analysisData.appendChild(popularity);
-        analysisData.appendChild(loudness);
-        
-        singleSongContainer.style.display = 'block';
+    analysisData.appendChild(bpm);
+    analysisData.appendChild(energy);
+    analysisData.appendChild(danceability);
+    analysisData.appendChild(liveness);
+    analysisData.appendChild(valence);
+    analysisData.appendChild(acousticness);
+    analysisData.appendChild(speechiness);
+    analysisData.appendChild(popularity);
+    analysisData.appendChild(loudness);
+    
+    singleSongContainer.style.display = 'block';
 
-    }
+}
 
 
 
@@ -452,16 +470,23 @@ function hidePlaylistView() {
         // makeTable(songs); because we do not need it 
     }
 // button to test that the playlist is working
-    const createPlaylistButton = document.createElement('button');
-    createPlaylistButton.textContent = 'Create Playlist';
-    createPlaylistButton.addEventListener('click', function () {
-    hideSearchPage();
-});
-   dropdown.appendChild(createPlaylistButton);
+   
+    const playlistButton = document.getElementById("playlistButton");
+    playlistButton.addEventListener('click', function(){
+        hideSearchPage();
+    })
+
+    function hideSingleSong(){
+        singleSongContainer.style.display='none';
+    }
+
+    const closeButton = document.getElementById("closeView");
+    closeButton.addEventListener('click', function(){
+        hidePlaylistView();
+        hideSingleSong();
+    })
 
 
-
-    
 });
 
 
