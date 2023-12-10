@@ -96,4 +96,83 @@ h2.hidden {
     display: none;
   }
 
+  .headerButton {
+    background-color: #058c42;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+  }
+  
+  .headerButton:hover, .headerButton:focus {
+    background-color: #16db65;
+  }
+  
+  .panel {
+    position: relative;
+    display: inline-block;
+    
+  }
+  
+  .credit-content {
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    bottom: 40px;
+  }
+  
+  .credit-content a {
+    color: black;
+    padding: 12px 16px;
+    display: block;
+  }
+  
+  .panel a:hover {
+      background-color: #16db65;
+      bottom: 100%;
+  }
+
+  .single-song-container{
+      display: grid;
+      grid-template-columns: 300px, 300px;
+  }
+         
+  .singleHeader { 
+    grid-area: header; 
+    background-color: #058C42;
+    color: white;
+    padding-left: 10px;
+
+  }
+
+  .fastFacts { 
+    grid-area: facts; 
+    background-color: #058C42;
+    color: white;
+    padding-left: 10px;
+  }
+
+  .analytics { 
+    grid-area: analytics;
+    background-color: #058C42;
+    color: white;
+    padding-left: 10px;
+   }
+
+  .radarChart { 
+    grid-area: radar;
+    background-color: rgb(203,246,221);
+    margin: 10px;
+
+   }
+
+  .single-song-body {
+    display: grid;
+    grid-template-areas:
+    'header header radar radar radar radar'
+    'facts facts radar radar radar radar'
+    'analytics analytics radar radar radar radar';
+    padding: 10px;
+}
+
  
