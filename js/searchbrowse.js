@@ -24,33 +24,45 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectArtists = document.createElement('select');
     const selectGenres = document.createElement('select');
 
-    const radioGenres = document.createElement('input');
-    radioGenres.type = 'radio';
-    radioGenres.name = 'filterType';
-    radioGenres.value = 'genres';
-    radioGenres.id = 'radioGenres';
-    const labelGenres = document.createElement('label');
-    labelGenres.textContent = 'Genres';
-    labelGenres.htmlFor = 'radioGenres';
 
-    const radioArtists = document.createElement('input');
-    radioArtists.type = 'radio';
-    radioArtists.name = 'filterType';
-    radioArtists.value = 'artists';
-    radioArtists.id = 'radioArtists';
-    const labelArtists = document.createElement('label');
-    labelArtists.textContent = 'Artists';
-    labelArtists.htmlFor = 'radioArtists';
+    const radioGenres = document.getElementById("radioGenres");
+    const labelGenres = document.getElementById("radioGenreLabel");
 
-    const titleInput = document.createElement('input');
-    titleInput.type = 'text';
-    titleInput.placeholder = 'Filter by Title';
-    titleInput.id = 'titleFilter';
-    const titleRadio = document.createElement('input');
-    titleRadio.type = 'radio';
-    titleRadio.name = 'filterType';
-    titleRadio.value = 'title';
-    titleRadio.id = 'radioTitle';
+    const radioArtists = document.getElementById("radioArtists");
+    const labelArtists = document.getElementById("radioArtistLabel");
+
+    const titleInput = document.getElementById("titleFilter");
+    const titleRadio = document.getElementById("radioTitle");
+    const labelTitle = document.getElementById("radioTitleLabel");
+
+
+    // const radioGenres = document.createElement('input');
+    // radioGenres.type = 'radio';
+    // radioGenres.name = 'filterType';
+    // radioGenres.value = 'genres';
+    // radioGenres.id = 'radioGenres';
+    // const labelGenres = document.createElement('label');
+    // labelGenres.textContent = 'Genres';
+    // labelGenres.htmlFor = 'radioGenres';
+
+    // const radioArtists = document.createElement('input');
+    // radioArtists.type = 'radio';
+    // radioArtists.name = 'filterType';
+    // radioArtists.value = 'artists';
+    // radioArtists.id = 'radioArtists';
+    // const labelArtists = document.createElement('label');
+    // labelArtists.textContent = 'Artists';
+    // labelArtists.htmlFor = 'radioArtists';
+
+    // const titleInput = document.createElement('input');
+    // titleInput.type = 'text';
+    // titleInput.placeholder = 'Filter by Title';
+    // titleInput.id = 'titleFilter';
+    // const titleRadio = document.createElement('input');
+    // titleRadio.type = 'radio';
+    // titleRadio.name = 'filterType';
+    // titleRadio.value = 'title';
+    // titleRadio.id = 'radioTitle';
 
 
 
@@ -63,20 +75,19 @@ document.addEventListener("DOMContentLoaded", function () {
     dropdown.appendChild(labelArtists);
     dropdown.appendChild(selectArtists);
     dropdown.appendChild(selectGenres);
-    dropdown.appendChild(titleInput);
     dropdown.appendChild(titleRadio);
+    dropdown.appendChild(labelTitle);
+    dropdown.appendChild(titleInput);
     dropdown.appendChild(loader);
 
 
-    const filterButton = document.createElement('button');
-    filterButton.textContent = 'Filter';
+    const filterButton=document.getElementById("filterButton");
     filterButton.addEventListener('click', function () {
         applyFilter();
     });
     dropdown.appendChild(filterButton);
 
-    const clearButton = document.createElement('button');
-    clearButton.textContent = 'Clear';
+    const clearButton=document.getElementById("clearButton");
     clearButton.addEventListener('click', function () {
         clearSelection();
     });
@@ -361,8 +372,8 @@ function showSingleSongView(song){
     const yearElement = document.createElement('p');
     yearElement.textContent = "Year: " + song.year;
 
-    const artistType=document.createElement('p');
-    artistType.textContent="ArtistType: "+ artistList.type;
+    // const artistType=document.createElement('p');
+    // artistType.textContent="ArtistType: "+ artistList.type;
 
     const genre=document.createElement('p');
     genre.textContent="Genre:"+song.genre.name;
@@ -430,7 +441,7 @@ function showSingleSongView(song){
     singleSongContainer.appendChild(titleElement);
     singleSongContainer.appendChild(artistElement);
     singleSongContainer.appendChild(yearElement);
-    singleSongContainer.appendChild(artistType);
+    // singleSongContainer.appendChild(artistType);
     singleSongContainer.appendChild(genre);
     singleSongContainer.appendChild(duration);
     singleSongContainer.appendChild(analysisData);
