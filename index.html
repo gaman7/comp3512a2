@@ -1,136 +1,131 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Comp 3512- Assignment 2</title>
-    <script src="JSON/artists.json"></script>
-    <script src="JSON/genres.json"></script>
-    <script src="JSON/sample-songs.json"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <link rel="stylesheet" type="text/css" href="./css/styels.css">
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <title>Comp 3512- Assignment 2</title>
+      <script src="JSON/artists.json"></script>
+      <script src="JSON/genres.json"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+      <link rel="stylesheet" type="text/css" href="./css/styels.css">
+  </head>
 
-    <style>
+  <body>
+      <header>
+          <h1>COMP 3512 Assignment 2</h1>
 
-
-
-        
-        </style>
-</head>
-
-<body>
-    <header>
-        <h1>COMP 3512 Assign2</h1>
-
-        <nav>  
-            <div class="panel">
-                <button onmouseover="creditDropdown()" class="headerButton">Credits</button>
-                <div id="creditButton" class="credit-content" style="display:none;">
-                  <a>By Marselya Ismael and Nicole Ranieri</a>
-                  <a href="https://github.com/gaman7/comp3512a2.git">Github url</a>
+          <nav>  
+              <div class="panel">
+                  <button onmouseover="creditDropdown()" class="headerButton">Credits</button>
+                  <div id="creditButton" class="credit-content" style="display:none;">
+                    <a>By Marselya Ismael and Nicole Ranieri</a>
+                    <a href="https://github.com/gaman7/comp3512a2.git">Github url</a>
+                  </div>
                 </div>
-              </div>
-        </nav>
-    </header>
+          </nav>
+      </header>
 
-    <!-- Search Container -->
-    <div id="search-container">
+      <!-- Search Container -->
+      <div id="search-container">
         <header class="secondaryHeader">
             <nav>
             <button id="playlistButton" class="headerButton">Playlist</button>
         </nav>
         </header>
     <h2>Browse/Search Songs</h2>
-  <div id="inside-div">
-  
-  <div class="filterButtons">
-  
-    <div class="genrebutton">
-  <input type ="radio" id = "radioGenres" name ="filterType" value="genres">
-  <label htmlFor="radioGenres" id="radioGenreLabel"> Filter by Genre</label>
-  </div>
-  <div class="artist-button">
-  <br>
-  <input type ="radio" id = "radioArtists" name ="filterType" value="artists">
-  <label for="radioArtists" id="radioArtistLabel">Filter by Artist</label><br>
-  </div>
-  <br>
+
+
+  <div id="dropdown">
+
+
+  <label class="container" htmlFor="radioGenres" id="radioGenreLabel"> Filter by Genre
+    <input type ="radio" id = "radioGenres" name ="filterType" value="genres">
+    <select id="selectGenre">
+        <option id="optionGenre">Select Genre</option>
+    </select>
+  </label>
+
+  <label class="container" for="radioArtists" id="radioArtistLabel">Filter by Artist
+    <input type ="radio" id = "radioArtists" name ="filterType" value="artists">
+    <select id="selectArtists">
+      <option id="optionArtist">Select Artist</option>
+    </select>
+  </label>
+
   <div class="title-button">
+  <label class="container" for="radioTitle" id = "radioTitleLabel">Filter by Title
   <input type="radio" name="filterType" value="title" id="radioTitle">
-  <label for="radioTitle" id = "radioTitleLabel">Filter by Title</label><br>
-  <input type="text" placeholder="Filter by Title" id="titleFilter">
+  <input type="text" placeholder="Filter by Title" id="titleFilter"></label>
   </div>
-  <div id="dropdown"></div>
   </div> 
-  
-  <br>
+
   <button id="filterButton">Filter</button>
   <button id="clearButton">Clear</button>
-  
-  <div id="table-container" style="width: 45%; display: inline-block; margin: 10px; padding: 10px; border: 1px solid #ccc;"></div>
+
+  <div id="table-container"></div>
   </div> 
-  
+
       </div>
-    </div>
 
-  
-    <!-- Playlist Container -->
-    <div id="playlist-container" style="display: none;">
-        <header class="secondaryHeader">
-            <nav>
-            <button id="closeViewPlaylist" class="headerButton">Close View</button>
-        </nav>
-        </header>
-        <h2>Playlist</h2>
-        <table id="playlist-table"></table>
-    </div>
+      <!-- Playlist Container -->
+      <div id="playlist-container" style="display: none;">
+          <header class="secondaryHeader">
+              <nav>
+              <button id="closeViewPlaylist" class="headerButton">Close View</button>
+          </nav>
+          </header>
+          <h2>Playlist</h2>
+          <table id="playlist-table"></table>
+      </div>
 
-    <!-- Single Song Container -->
-    <div id="single-song-container" style="display: none;">
-        <header class="secondaryHeader">
-            <nav>
-            <button id="closeViewSS" class="headerButton">Close View</button>
-        </nav>
-        </header>
+      <!-- Single Song Container -->
+      <div id="single-song-container" style="display: none;">
+          <header class="secondaryHeader">
+              <nav>
+              <button id="closeViewSS" class="headerButton">Close View</button>
+          </nav>
+          </header>
 
-        <div class="single-song-body">
+          <div class="single-song-body">
 
-          <div class="singleHeader"><h2>Song Information</h2></div>
+            <div class="singleHeader"><h2>Song Information</h2></div>
 
-          <div class="fastFacts"><h3>Fast Facts:</h3>
-            <ul id="fastFactsList">
-              <li id="factsTitle"></li>
-              <li id="factsArtist"></li>
-              <li id="factsYear"></li>
-              <li id="factsGenre"></li>
-              <li id="factsDuration"></li>
-            </ul></div>
+            <div class="fastFacts"><h3>Fast Facts:</h3>
+              <ul id="fastFactsList">
+                <li id="factsTitle"></li>
+                <li id="factsArtist"></li>
+                <li id="factsYear"></li>
+                <li id="factsGenre"></li>
+                <li id="factsDuration"></li>
+              </ul></div>
 
-          <div class="analytics"><h4>Analytics</h4>
-            <ul id="analyticsTable">
-            <li id="bpm"></td>
-            <li id="energy"></li>
-            <li id="danceability"></li>
-            <li id="liveness"></li>
-            <li id="valence"></li>
-            <li id="acousticness"></li>
-            <li id="speechiness"></li>
-            <li id="popularity"></li>
-            <li id="loudness"></li>
-              </ul></div>  
-          <div class="radarChart"><div style="height:500px">
-            <canvas id="myChart"></canvas>
-         </div></div>
-        </div>
+            <div class="analytics"><h3>Analytics:</h3>
+              <ul id="analyticsTable">
+              <li id="bpm"></td>
+              <li id="energy"></li>
+              <li id="danceability"></li>
+              <li id="liveness"></li>
+              <li id="valence"></li>
+              <li id="acousticness"></li>
+              <li id="speechiness"></li>
+              <li id="popularity"></li>
+              <li id="loudness"></li>
+                </ul></div>  
+            <div class="radarChart"><div style="height:500px">
+              <canvas id="myChart"></canvas>
+          </div></div>
+          </div>
+          </div>
 
-    <footer>
-        <p>Course Name: COMP 3512</p>
-        <p>Copyright &copy; 2023 Marselya Ismael, Gaman Kaur, Nicole Ranieri</p>
-        <p>GitHub Repository: <a href="https://github.com/gaman7/comp3512a2">Github Repo</a></p>
-        <p>GitHub Profile: <a href="#">Marselyai</a></p>
-    </footer>
+      <footer>
+          <p>Course Name: COMP 3512</p>
+          <p>Copyright &copy; 2023 Marselya Ismael, Gaman Kaur, Nicole Ranieri</p>
+          <p>GitHub Repository: <a href="https://github.com/gaman7/comp3512a2">Github Repo</a></p>
+          <p>GitHub Profile: <a href="#">Marselyai</a></p>
+      </footer>
 
-    <script src="js/searchbrowse.js"></script>
-    <script src="js/playlistView.js"></script>
-</body>
-</html>
+      <script src="js/searchbrowse.js"></script>
+      <script src="js/playlistView.js"></script>
+  </body>
+  </html>
 
 
 
