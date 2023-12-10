@@ -8,44 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    <link rel="stylesheet" type="text/css" href="./css/styels.css">
 
     <style>
-        .headerButton {
-          background-color: #058c42;
-          color: white;
-          padding: 16px;
-          font-size: 16px;
-        }
-        
-        .headerButton:hover, .headerButton:focus {
-          background-color: #16db65;
-        }
-        
-        .panel {
-          position: relative;
-          display: inline-block;
-          
-        }
-        
-        .credit-content {
-          position: absolute;
-          background-color: white;
-          min-width: 150px;
-          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-          bottom: 40px;
-        }
-        
-        .credit-content a {
-          color: black;
-          padding: 12px 16px;
-          display: block;
-        }
-        
-        .panel a:hover {
-            background-color: #16db65;
-            bottom: 100%;
-        }
 
-     
-                
+
+
         
         </style>
 </head>
@@ -117,12 +82,36 @@
             <button id="closeViewSS" class="headerButton">Close View</button>
         </nav>
         </header>
-        <h2>Song Information</h2>
-    <div>
-      <canvas id="myChart"></canvas>
-    </div>
-    
-  </div>
+
+        <div class="single-song-body">
+
+          <div class="singleHeader"><h2>Song Information</h2></div>
+
+          <div class="fastFacts"><h3>Fast Facts:</h3>
+            <ul id="fastFactsList">
+              <li id="factsTitle"></li>
+              <li id="factsArtist"></li>
+              <li id="factsYear"></li>
+              <li id="factsGenre"></li>
+              <li id="factsDuration"></li>
+            </ul></div>
+
+          <div class="analytics"><h4>Analytics</h4>
+            <ul id="analyticsTable">
+            <li id="bpm"></td>
+            <li id="energy"></li>
+            <li id="danceability"></li>
+            <li id="liveness"></li>
+            <li id="valence"></li>
+            <li id="acousticness"></li>
+            <li id="speechiness"></li>
+            <li id="popularity"></li>
+            <li id="loudness"></li>
+              </ul></div>  
+          <div class="radarChart"><div style="height:500px">
+            <canvas id="myChart"></canvas>
+         </div></div>
+        </div>
 
     <footer>
         <p>Course Name: COMP 3512</p>
