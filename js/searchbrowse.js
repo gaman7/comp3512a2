@@ -360,59 +360,28 @@ closeButtonSS.addEventListener('click', function(){
 
 function showSingleSongView(song){
     hidePlaylistView();
-
     singleSongContainer.style.display = 'block';
     
-    const titleElement = document.createElement('p');
-    titleElement.textContent ="Title:"+ song.title;
-
-    const artistElement = document.createElement('p');
-    artistElement.textContent = "Artist: " + song.artist.name;
-
-    const yearElement = document.createElement('p');
-    yearElement.textContent = "Year: " + song.year;
-
-    // const artistType=document.createElement('p');
-    // artistType.textContent="ArtistType: "+ artistList.type;
-
-    const genre=document.createElement('p');
-    genre.textContent="Genre:"+song.genre.name;
-
+    //fast facts list
+    const titleElement = document.getElementById('factsTitle').textContent= "Title: " +song.title;
+    const artistElement = document.getElementById('factsArtist').textContent= "Artist: " +song.artist.name;
+    const yearElement = document.getElementById('factsYear').textContent= "Year: " +song.year;
+    const genre = document.getElementById('factsGenre').textContent= "Genre: " +song.genre.name;
     const totalTime = toMinutes(song.details.duration);
-    const duration=document.createElement('p');
-    duration.textContent="Duration: "+totalTime.minutes + ":" + totalTime.seconds;
+    const duration = document.getElementById('factsDuration').textContent= "Duration: " +totalTime.minutes + ":" + totalTime.seconds;
 
     //analysis data list
-    const analysisData=document.createElement('ul');
-    analysisData.textContent="Analysis Data:";
+    const analysisData=document.getElementById("analyticsTable")
 
-    const bpm = document.createElement('li');
-    bpm.textContent="BPM: " + song.details.bpm;
-
-    const energy = document.createElement('li');
-    energy.textContent="Energy: " + song.analytics.energy;
-
-    const danceability = document.createElement('li');
-    danceability.textContent="Danceability: " + song.analytics.danceability;
-
-    const liveness = document.createElement('li');
-    liveness.textContent="Liveness: " + song.analytics.liveness;
-
-    const valence = document.createElement('li');
-    valence.textContent="Valence: " + song.analytics.valence;
-
-    const acousticness = document.createElement('li');
-    acousticness.textContent="Acousticness: " + song.analytics.acousticness;
-
-    const speechiness = document.createElement('li');
-    speechiness.textContent="Speechiness: " + song.analytics.speechiness;
-
-    const popularity = document.createElement('li');
-    popularity.textContent="Popularity: " + song.details.popularity;
-
-    const loudness = document.createElement('li');
-    loudness.textContent="Loudness: " + song.details.loudness;
-
+    const bpm = document.getElementById("bpm").textContent="BPM: " + song.details.bpm;
+    const energy = document.getElementById("energy").textContent="Energy: " + song.analytics.energy;
+    const danceability = document.getElementById('danceability').textContent="Danceability: " + song.analytics.danceability;
+    const liveness = document.getElementById('liveness').textContent="Liveness: " + song.analytics.liveness;
+    const valence = document.getElementById('valence').textContent="Valence: " + song.analytics.valence;
+    const acousticness = document.getElementById('acousticness').textContent="Acousticness: " + song.analytics.acousticness;
+    const speechiness = document.getElementById('speechiness').textContent="Speechiness: " + song.analytics.speechiness;
+    const popularity = document.getElementById('popularity').textContent="Popularity: " + song.details.popularity;
+    const loudness = document.getElementById('loudness').textContent="Loudness: " + song.details.loudness;
 
     const ctx = document.getElementById('myChart');
   
@@ -421,10 +390,12 @@ function showSingleSongView(song){
       data: {
         labels: ['Danceability', 'Energy', 'Valence', 'Speechiness', 'Loudness', 'Liveness'],
         datasets: [{
-          label: 'Title',
+          label: song.title + " Information",
           data: [song.analytics.danceability, song.analytics.energy, song.analytics.valence, 
             song.analytics.speechiness, song.details.loudness, song.analytics.liveness],
-          borderWidth: 1
+          borderWidth: 1,
+          backgroundColor: 'rgba(5, 140, 66, 0.5)',
+          
         }]
       },
       options: {
@@ -435,29 +406,6 @@ function showSingleSongView(song){
         }
       }
     });
-
-
-   
-    singleSongContainer.appendChild(titleElement);
-    singleSongContainer.appendChild(artistElement);
-    singleSongContainer.appendChild(yearElement);
-    // singleSongContainer.appendChild(artistType);
-    singleSongContainer.appendChild(genre);
-    singleSongContainer.appendChild(duration);
-    singleSongContainer.appendChild(analysisData);
-
-    analysisData.appendChild(bpm);
-    analysisData.appendChild(energy);
-    analysisData.appendChild(danceability);
-    analysisData.appendChild(liveness);
-    analysisData.appendChild(valence);
-    analysisData.appendChild(acousticness);
-    analysisData.appendChild(speechiness);
-    analysisData.appendChild(popularity);
-    analysisData.appendChild(loudness);
-    
-    
-
 }
 
 
